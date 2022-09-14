@@ -1,0 +1,14 @@
+
+#bottom_wrapper
+{
+    width:100%;
+    height:fit-content;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+#bottom_wrapper > * {
+    opacity: 100%; 
+}
