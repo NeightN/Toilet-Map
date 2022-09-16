@@ -49,48 +49,54 @@
 
 
 
-    <nav class="navbar bg-light">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand">NajdiZachod.cz</a>
-            <form class="d-flex" role="search">
-                <div>
-                    <input class="form-control me-2" type="text" id="searchBar" placeholder="Hledej" aria-label="Search">
-                </div>
-                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
-            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse flex-row-reverse" id="mynavbar">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2 mt-2 mb-2" type="text" id="searchBar" placeholder="Hledej" aria-label="Search">
+                    <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                </form>
+            </div>
         </div>
     </nav>
 
 
-    <div id="m" style="height:800px">
-
+    <div id="m" class="own_height">
         <div id="bottom_wrapper">
-
-
             <div class="container p-2">
-                
-            <form action="addZachod.php" method="post">
-
-                <div>
-                    <h6 class="text-light">Přidejte záchod, pokud ještě nebyl oběven.</h6>
-                </div>
-
-                <div class="d-flex align-items-baseline">
-                    
+                <form action="addZachod.php" method="post">
+                    <div>
+                        <h6 class="text-light">Přidejte záchod, pokud ještě nebyl oběven.</h6>
+                    </div>
+                    <div class="d-flex align-items-baseline">
                         <input required type="text" name="jmeno" class="form-control" id="inputName" placeholder="Název">
-                        <input type="text" name="cena" class="form-control" id="inputPrice" placeholder="Cena">
-                        <p class="form-control"  readonly id="inputCoordinatesDisplay">Souřadnice: (Pohněte bodem na mapě)</p>
+                        <input type="text" name="cena" class="form-control" id="inputPrice" placeholder="Cena/Kód">
+                        <!--
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                Typ
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item">Kč</a></li>
+                                <li><a class="dropdown-item">Kód</a></li>
+                            </ul>
+                        </div>
+                        -->
+                        <p class="form-control" readonly id="inputCoordinatesDisplay">Souřadnice: (Pohněte bodem na mapě)</p>
                         <input required type="text" name="coords" style="display: none;" class="form-control" id="inputCoordinates" placeholder="Cena">
 
-                    <button type="button" class="btn btn-secondary" onclick="OnCancelRegisterZachod(this)" >Zavřít</button>
-                    <input type="submit"  class="btn btn-primary" value="Uložit záchod">
+                        <button type="button" class="btn btn-secondary" onclick="OnCancelRegisterZachod(this)">Zavřít</button>
+                        <input type="submit" class="btn btn-primary" value="Uložit záchod">
 
-                </div>
-            </form>
+                    </div>
+                </form>
 
             </div>
-
-
 
         </div>
 
@@ -117,7 +123,7 @@
 
 
 
-        <div class="">
+        <div class="table-responsive">
             <br>
             <table id="zachodov" class="table">
                 <thead class="thead-dark">
@@ -125,7 +131,6 @@
                         <th scope="col">Jméno</th>
                         <th scope="col">Zadarmo?</th>
                         <th scope="col">Souřadnice</th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -338,12 +343,12 @@
         // Button Press!
         function OpenByButton(element) {
 
-            if(isPridavani)
-            OnCancelRegisterZachod();
+            if (isPridavani)
+                OnCancelRegisterZachod();
 
             var btnCords = SMap.Coords.fromWGS84(element.innerText);
             m.setCenterZoom(btnCords, 16);
-            
+
             document.getElementById("m").scrollIntoView();
 
         }
@@ -351,9 +356,9 @@
 
         // Markers clicc
         m.getSignals().addListener(this, "marker-click", function(e) {
-            
-            if(isPridavani)
-            OnCancelRegisterZachod();
+
+            if (isPridavani)
+                OnCancelRegisterZachod();
 
             // vybrany marker
             var marker = e.target;
@@ -394,30 +399,30 @@
 
 
         // Map stress
-/*
-        function click(e, elm) {
-                var coords = SMap.Coords.fromEvent(e.data.event, m);
-                alert("Kliknuto na " + coords.toWGS84(2).reverse().join(" "));
-        }
-        m.getSignals().addListener(window, "map-click", click); 
+        /*
+                function click(e, elm) {
+                        var coords = SMap.Coords.fromEvent(e.data.event, m);
+                        alert("Kliknuto na " + coords.toWGS84(2).reverse().join(" "));
+                }
+                m.getSignals().addListener(window, "map-click", click); 
 
 
-*/
+        */
 
 
-isPridavani = false;
+        isPridavani = false;
 
-var tempDropMark;
+        var tempDropMark;
 
         function OnRegisterZachod(element) {
-            if(isPridavani != false)
-            return;
+            if (isPridavani != false)
+                return;
 
             isPridavani = true
             var registerPanel = document.getElementById("bottom_wrapper");
             registerPanel.style.zIndex = 3;
-            
-            registerPanel.style.display = "block";  
+
+            registerPanel.style.display = "block";
 
             tempDropMark = new SMap.Marker(m.getCenter());
             tempDropMark.setURL("drop-blueWC.png");
@@ -428,40 +433,37 @@ var tempDropMark;
         }
 
         function OnCancelRegisterZachod(element) {
-            if(isPridavani != true)
-            return;
+            if (isPridavani != true)
+                return;
 
             isPridavani = false
             var registerPanel = document.getElementById("bottom_wrapper");
             registerPanel.style.zIndex = 0;
-            registerPanel.style.display = "none";  
+            registerPanel.style.display = "none";
 
             vrstva.removeMarker(tempDropMark);
 
         }
 
 
-function start(e) { /* Začátek tažení */
-    var node = e.target.getContainer();
-    node[SMap.LAYER_MARKER].style.cursor = "help";
-}
+        function start(e) {
+            /* Začátek tažení */
+            var node = e.target.getContainer();
+            node[SMap.LAYER_MARKER].style.cursor = "help";
+        }
 
-function stop(e) {
-    var node = e.target.getContainer();
-    node[SMap.LAYER_MARKER].style.cursor = "";
-    var coords = e.target.getCoords();
-    document.getElementById("inputCoordinatesDisplay").innerText = "Souřadnice: " + coords.toWGS84(2).reverse().join(" ");
-    document.getElementById("inputCoordinates").value = coords.toWGS84(2).reverse().join(", ").replace('"N',"").replace('"E', "");
+        function stop(e) {
+            var node = e.target.getContainer();
+            node[SMap.LAYER_MARKER].style.cursor = "";
+            var coords = e.target.getCoords();
+            document.getElementById("inputCoordinatesDisplay").innerText = "Souřadnice: " + coords.toWGS84(2).reverse().join(" ");
+            document.getElementById("inputCoordinates").value = coords.toWGS84(2).reverse().join(", ").replace('"N', "").replace('"E', "");
 
-}
+        }
 
-var signals = m.getSignals();
-signals.addListener(window, "marker-drag-stop", stop);
-signals.addListener(window, "marker-drag-start", start);            
-
-
-
-
+        var signals = m.getSignals();
+        signals.addListener(window, "marker-drag-stop", stop);
+        signals.addListener(window, "marker-drag-start", start);
     </script>
 </body>
 

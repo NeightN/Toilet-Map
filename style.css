@@ -12,3 +12,7 @@
 #bottom_wrapper > * {
     opacity: 100%; 
 }
+
+.own_height{
+    height: 800px; 
+}
