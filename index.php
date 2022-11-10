@@ -193,15 +193,7 @@
 
         </div>
     </div>
-
-
-
-
-
-
-
-
-
+    
     <script>
         var obrazek = "drop-redWC.png";
 
